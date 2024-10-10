@@ -16,9 +16,8 @@ public class DataService {
 
     private final AuthorRepository authorRepository;
 
-
     @Transactional
-    public void insertData() {
+    public void insertAuthorList() {
 
         List<Author> authorsList = new ArrayList<>();
 
