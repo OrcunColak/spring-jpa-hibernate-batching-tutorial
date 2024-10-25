@@ -24,7 +24,7 @@ public class DataService {
             authorRepository.save(authorsList.get(i));
 
             if (i % batchSize == 0 && i > 0) {
-                entityManager.flush();
+                authorRepository.flush();
                 entityManager.clear();
             }
         }
