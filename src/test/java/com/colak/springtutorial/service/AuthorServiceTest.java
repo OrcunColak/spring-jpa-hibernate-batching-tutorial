@@ -10,24 +10,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-class DataServiceTest {
+class AuthorServiceTest {
 
     @Autowired
-    private DataService dataService;
+    private AuthorService authorService;
 
     @Test
     void insertAuthorList() {
         List<Author> authorsList = new ArrayList<>();
         for (int authorIndex = 1; authorIndex <= 50; authorIndex++) {
-            Author author = new Author("Owner " + authorIndex);
+            Author author = new Author();
+            author.setName("Owner " + authorIndex);
+
             authorsList.add(author);
 
             List<Book> books = author.getBooks();
             for (int bookIndex = 1; bookIndex <= 3; bookIndex++) {
-                Book book = new Book("Book " + bookIndex + " of Author " + authorIndex, author);
+                Book book = new Book();
+                book.setTitle("Book " + bookIndex + " of Author " + authorIndex);
+                book.setAuthor(author);
                 books.add(book);
             }
         }
-        dataService.insertAuthorList(authorsList, 20);
+        authorService.insertAuthorList(authorsList, 20);
     }
 }

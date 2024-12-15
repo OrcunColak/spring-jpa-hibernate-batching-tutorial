@@ -7,11 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DataService {
+public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
@@ -28,6 +29,21 @@ public class DataService {
                 entityManager.clear();
             }
         }
+    }
+
+    // To ensure that JPA does not keep the entity in memory after processing it, we manually detach it using the EntityManager.
+    @Transactional(readOnly = true)
+    public List<Author> findAll() {
+        var result = new ArrayList<Author>();
+        try (var authorStream = authorRepository.findAllBy()) {
+            authorStream.forEach(
+                    order -> {
+                        result.add(order);
+                        entityManager.detach(order);
+                    });
+        }
+
+        return result;
     }
 }
 

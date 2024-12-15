@@ -10,6 +10,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 @Table(name = "author")
 
 @Getter
+@Setter
 public class Author {
 
     @Id
@@ -30,10 +32,4 @@ public class Author {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Book> books = new ArrayList<>();
 
-    public Author() {
-    }
-
-    public Author(String name) {
-        this.name = name;
-    }
 }

@@ -10,11 +10,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "book")
 
 @Getter
+@Setter
 public class Book {
 
     @Id
@@ -28,11 +30,4 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    public Book() {
-    }
-
-    public Book(String title, Author author) {
-        this.title = title;
-        this.author = author;
-    }
 }
