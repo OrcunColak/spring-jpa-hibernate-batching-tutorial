@@ -34,4 +34,16 @@ INSERT statements together.
 The original idea is from  
 https://medium.com/javajams/spring-boot-handling-a-rest-endpoint-that-queries-more-data-than-memory-available-a0c049548d04
 
-Service returns StreamingResponseBody
+Service returns StreamingResponseBody. StreamingResponseBody uses Chunked Encoding: Instead of sending a single, large response, split the response into smaller chunks.
+```java
+@GetMapping("/chunked-data") 
+public StreamingResponseBody getChunkedData() {    
+  return outputStream -> {        
+    for (Data data : dataService.getAllData()) {             
+      outputStream.write(data.toJson().getBytes());       
+      outputStream.flush();
+      // Send data in chunks        
+   }   
+  };
+}
+```
